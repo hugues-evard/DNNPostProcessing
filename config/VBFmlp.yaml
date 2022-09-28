@@ -1,0 +1,53 @@
+treename:
+    AnalysisTree
+selection:
+   ### use `&`, `|`, `~` for logical operations on numpy arrays
+   ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
+
+new_variables:
+   ### [format] name: formula
+   ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
+   #is_bkg: np.logical_not(is_signal_new)
+    type_0: np.where(m_eventCategory == -3, True, False)
+    type_1: np.where(m_eventCategory == -2, True, False)
+    type_2: np.where(m_eventCategory == -1, True, False)
+    type_3: np.where(m_eventCategory ==  0, True, False)
+    type_4: np.where(m_eventCategory ==  1, True, False)
+    type_5: np.where(m_eventCategory ==  2, True, False)
+
+preprocess:
+  ### method: [manual, auto] - whether to use manually specified parameters for variable standardization
+  method: manual
+  ### data_fraction: fraction of events to use when calculating the mean/scale for the standardization
+  data_fraction: 
+
+inputs:
+   pf_features:
+      length: 100
+      vars: 
+      ### [format 1]: var_name (no transformation)
+      ### [format 2]: [var_name, 
+      ###              subtract_by(optional, default=None, no transf. if preprocess.method=manual, auto transf. if preprocess.method=auto), 
+      ###              multiply_by(optional, default=1), 
+      ###              clip_min(optional, default=-5), 
+      ###              clip_max(optional, default=5), 
+      ###              pad_value(optional, default=0)]
+         - m_HT_nonVBF_jets
+         - m_n_PF_jet1
+      #   - m_phi
+      #   - m_eta
+
+labels:
+   ### type can be `simple`, `custom`
+   ### [option 1] use `simple` for binary/multi-class classification, then `value` is a list of 0-1 labels
+   type: simple
+   value: [
+       type_0, type_1, type_2, type_3, type_4, type_5 
+      ]
+   ### [option 2] otherwise use `custom` to define the label, then `value` is a map
+   # type: custom
+   # value: 
+      # target_mass: np.where(fj_isQCD, fj_genjet_sdmass, fj_gen_mass) 
+
+observers:
+   - m_n_PF_jet2
