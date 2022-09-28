@@ -14,14 +14,14 @@ DATADIR=${DATADIR_VBF}
 suffix=${COMMENT}
 
 # PN, PFN, PCNN, ParT
-modelopts="networks/VBFmlp.py"
+modelopts="config/VBFmlp.py"
 lr="1e-3"
 extraopts=""
 
 weaver \
     --data-train "${DATADIR}/MC__GluGluHToZZTo4L_M130_standard_UL18_[1-3].root" \
     --data-test "${DATADIR}/MC__GluGluHToZZTo4L_M130_standard_UL18_4.root" \
-    --data-config data/VBF/VBFmlp.yaml --network-config $modelopts \
+    --data-config config/VBFmlp.yaml --network-config $modelopts \
     --model-prefix training/VBF/{auto}${suffix}/net \
     --num-workers 1 --fetch-step 1 --in-memory --train-val-split 0.8889 \
     --batch-size 512 --samples-per-epoch 16000 --samples-per-epoch-val 2000 --num-epochs 2 \
