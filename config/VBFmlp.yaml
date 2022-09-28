@@ -7,13 +7,7 @@ selection:
 new_variables:
    ### [format] name: formula
    ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
-   #is_bkg: np.logical_not(is_signal_new)
-    type_0: np.where(m_eventCategory == -3, True, False)
-    type_1: np.where(m_eventCategory == -2, True, False)
-    type_2: np.where(m_eventCategory == -1, True, False)
-    type_3: np.where(m_eventCategory ==  0, True, False)
-    type_4: np.where(m_eventCategory ==  1, True, False)
-    type_5: np.where(m_eventCategory ==  2, True, False)
+   is_bkg: np.logical_not(m_is_VBF)
 
 preprocess:
   ### method: [manual, auto] - whether to use manually specified parameters for variable standardization
@@ -32,8 +26,14 @@ inputs:
       ###              clip_min(optional, default=-5), 
       ###              clip_max(optional, default=5), 
       ###              pad_value(optional, default=0)]
-         - m_HT_nonVBF_jets
-         - m_n_PF_jet1
+         - PF_pt
+         - PF_eta
+         - PF_phi
+         - PF_energy
+      #   - VBF_pt
+      #   - VBF_eta
+      #   - VBF_phi
+      #   - VBF_energy
       #   - m_phi
       #   - m_eta
 
@@ -42,7 +42,7 @@ labels:
    ### [option 1] use `simple` for binary/multi-class classification, then `value` is a list of 0-1 labels
    type: simple
    value: [
-       type_0, type_1, type_2, type_3, type_4, type_5 
+       m_is_VBF, is_bkg
       ]
    ### [option 2] otherwise use `custom` to define the label, then `value` is a map
    # type: custom
@@ -50,4 +50,4 @@ labels:
       # target_mass: np.where(fj_isQCD, fj_genjet_sdmass, fj_gen_mass) 
 
 observers:
-   - m_n_PF_jet2
+    #- m_n_PF_jet2

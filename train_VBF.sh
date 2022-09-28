@@ -19,8 +19,8 @@ lr="1e-3"
 extraopts=""
 
 weaver \
-    --data-train "${DATADIR}/MC__GluGluHToZZTo4L_M130_standard_UL18_[1-3].root" \
-    --data-test "${DATADIR}/MC__GluGluHToZZTo4L_M130_standard_UL18_4.root" \
+    --data-train "${DATADIR}/MC__*_M125_standard_UL18_1_test.root" \
+    --data-test "${DATADIR}/MC__*_M125_standard_UL18_1_test.root" \
     --data-config config/VBFmlp.yaml --network-config $modelopts \
     --model-prefix training/VBF/{auto}${suffix}/net \
     --num-workers 1 --fetch-step 1 --in-memory --train-val-split 0.8889 \
