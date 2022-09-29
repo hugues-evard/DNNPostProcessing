@@ -70,7 +70,7 @@ inputs:
         ###              pad_value(optional, default=0)]
         #    - Part_Etarel
         #    - Part_Phirel
-        #    - [Part_E_log, 2, 1]
+            - [Part_E_log, 2, 1]
         #    - [Part_P_log, 2, 1]
         #
         #    - PF_pt
