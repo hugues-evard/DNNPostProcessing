@@ -43,7 +43,6 @@ new_variables:
     ### [format] name: formula
     ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
     is_bkg: np.logical_not(m_is_VBF)
-    #pf_mask: awkward.JaggedArray.ones_like(PF_energy)
     pf_mask: awkward.ones_like(PF_energy)
     PF_energy_log: np.log(PF_energy)
 
