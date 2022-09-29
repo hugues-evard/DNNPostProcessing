@@ -45,6 +45,7 @@ new_variables:
     is_bkg: np.logical_not(m_is_VBF)
     #pf_mask: awkward.JaggedArray.ones_like(PF_energy)
     pf_mask: awkward.ones_like(PF_energy)
+    PF_energy_log: np.log(PF_energy)
 
 preprocess:
   ### method: [manual, auto] - whether to use manually specified parameters for variable standardization
@@ -70,7 +71,7 @@ inputs:
         ###              pad_value(optional, default=0)]
         #    - Part_Etarel
         #    - Part_Phirel
-        #    - [Part_E_log, 2, 1]
+            - [Part_E_log, 2, 1]
         #    - [Part_P_log, 2, 1]
         #
         #    - PF_pt
