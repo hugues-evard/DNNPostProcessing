@@ -14,14 +14,14 @@ DATADIR=${DATADIR_VBF}
 suffix=${COMMENT}
 
 # PN, PFN, PCNN, ParT
-modelopts="config/VBFmlp.py"
+modelopts="config/particlenet_pf.py"
 lr="1e-3"
 extraopts=""
 
 weaver \
     --data-train "${DATADIR}/MC__*_M125_standard_UL18_1_test.root" \
     --data-test "${DATADIR}/MC__*_M125_standard_UL18_1_test.root" \
-    --data-config config/VBFmlp.yaml --network-config $modelopts \
+    --data-config config/VBFparticlenet.yaml --network-config $modelopts \
     --model-prefix training/VBF/{auto}${suffix}/net \
     --num-workers 1 --fetch-step 1 --in-memory --train-val-split 0.8889 \
     --batch-size 512 --samples-per-epoch 16000 --samples-per-epoch-val 2000 --num-epochs 2 \
