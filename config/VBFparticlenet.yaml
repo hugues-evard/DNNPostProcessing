@@ -1,38 +1,3 @@
-# This data card repoduces the data card used in the
-# ParticleNet and weaver tutorial at:
-# https://cms-ml.github.io/documentation/inference/particlenet.html
-#
-# This is not based on the data card use for CMS analysis
-#
-# variables in the original root file for top-tagging:
-#
-# Part_PX               unused
-# Part_PY               unused
-# Part_PZ               unused
-# Part_P                unused
-# truthE                unused
-# truthPX               unused
-# truthPY               unused
-# truthPZ               unused
-# ttv                   unused
-# is_signal_new         unused
-# E_tot                 observer
-# PX_tot                observer
-# PY_tot                observer
-# PZ_tot                observer
-# P_tot                 observer
-# Eta_tot               observer
-# Phi_tot               observer
-# origIdx               observer
-# idx                   observer
-#
-# Part_E                -> PF_energy
-# Part_E_log            -> new_variable PF_energy_log
-# Part_P_log            -> new_variable PF_P_log
-# Part_Etarel           -> PF_eta
-# Part_Phirel           -> PF_phi
-#
-#
 treename:
     AnalysisTree
 selection:
@@ -44,7 +9,7 @@ new_variables:
     ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
     is_bkg: np.logical_not(m_is_VBF)
     pf_mask: awkward.ones_like(PF_energy)
-    PF_energy_log: np.log(PF_energy)
+    #PF_energy_log: np.log(PF_energy)
 
 preprocess:
   ### method: [manual, auto] - whether to use manually specified parameters for variable standardization
@@ -76,13 +41,18 @@ inputs:
         #    - PF_pt
             - PF_eta
             - PF_phi
-        #    - PF_energy
-        #    - VBF_pt
-        #    - VBF_eta
-        #    - VBF_phi
-        #    - VBF_energy
-        #    - m_phi
-        #    - m_eta
+            - PF_pt
+            - PF_energy
+            - PF_pdgid
+            - PF_charge
+            - VBFjet_pt
+            - VBFjet_eta
+            - VBFjet_phi
+            - VBFjet_energy
+            - nonVBFjet_pt
+            - nonVBFjet_eta
+            - nonVBFjet_phi
+            - nonVBFjet_energy
     pf_mask:
         length: 100
         vars: 
@@ -101,7 +71,7 @@ labels:
         # target_mass: np.where(fj_isQCD, fj_genjet_sdmass, fj_gen_mass) 
 
 observers:
-    - PF_energy_log
+    #- PF_energy_log
     #- origIdx
     #- idx
     #- E_tot

@@ -2,3 +2,7 @@
 logs/
 runs/
 training/
+job.*.log
+job.*.err
+job.*.out
+output.*.tar
