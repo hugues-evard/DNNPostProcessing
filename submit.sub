@@ -1,5 +1,9 @@
 Universe                = vanilla
 executable              = run.sh
+#arguments               = <model> <data_card>
+#arguments               = networks/VBFmlp.py data/VBF_features.yaml
+arguments               = networks/deepak8_pf.py data/VBF_features.yaml
+#arguments               = networks/particlenet_pf.py data/VBF_points_features.yaml
 output                  = job.$(ClusterId).$(ProcId).out
 error                   = job.$(ClusterId).$(ProcId).err
 log                     = job.$(ClusterId).log

@@ -1,9 +1,7 @@
 #!/bin/bash
 
-#PREFIX=$1
-#MODEL_CONFIG=$2
-#DATA_CONFIG=$3
-#PATH_TO_SAMPLES=$4
+MODEL=$1
+DATA_CARD=$2
 WORKDIR=`pwd`
 
 # Download miniconda
@@ -41,7 +39,7 @@ export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/cuda-10.2/lib64
 
 #./train_QuarkGluon.sh ParT kin \
 #    --gpus 0 --batch-size 512 --num-epochs 2
-./train_VBF.sh
+./train_VBF.sh $MODEL $DATA_CARD
 
 #python train.py --predict \
 # --data-test ${PATH_TO_SAMPLES}'/prep/top_test_*.root' \
