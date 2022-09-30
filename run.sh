@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+
 MODEL=$1
 DATA_CARD=$2
 WORKDIR=`pwd`
@@ -17,8 +19,7 @@ pip install tensorboard
 pip install torch
 pip install pyarrow
 pip install weaver-core
-#git clone https://github.com/jet-universe/particle_transformer
-git clone https://github.com/hugues-evard/DNNPostProcessing
+git clone https://github.com/LEAF-HQ/DNNPostProcessing.git
 
 cd DNNPostProcessing
 
@@ -27,27 +28,6 @@ export PATH=$PATH:/usr/local/cuda-10.2/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-10.2/lib64
 export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/cuda-10.2/lib64
 
-#
-#mkdir output
+./train_VBF.sh $MODEL $DATA
 
-# proper env.sh
-#echo '#!/bin/bash
-
-#export DATADIR_JetClass=
-#export DATADIR_TopLandscape=
-#export DATADIR_QuarkGluon=/eos/user/h/hevard/datasets/QuarkGluon' > env.sh
-
-#./train_QuarkGluon.sh ParT kin \
-#    --gpus 0 --batch-size 512 --num-epochs 2
-./train_VBF.sh $MODEL $DATA_CARD
-
-#python train.py --predict \
-# --data-test ${PATH_TO_SAMPLES}'/prep/top_test_*.root' \
-# --num-workers 3 \
-# --data-config top_tagging/data/${DATA_CONFIG} \
-# --network-config top_tagging/networks/${MODEL_CONFIG} \
-# --model-prefix /eos/user/h/hevard/top_tagging/output/particlenet/${PREFIX}_best_epoch_state.pt \
-# --gpus 0 --batch-size 512 \
-# --predict-output output/${PREFIX}_predict.root
-
-[ -d "runs/" ] && tar -caf output.tar training/VBF/ runs/ || tar -caf output.tar training/VBF/
+[ -d "runs/" ] && tar -caf output.tar trainings/${MODEL}/ runs/ || tar -caf output.tar trainings/${MODEL}/
