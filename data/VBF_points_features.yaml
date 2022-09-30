@@ -1,3 +1,6 @@
+# This can be used to run ParticleNet
+# pf_points are the variables used as coordinates in the first EdgeConv Block
+# pf_features are the variables used as features in the first EdgeConv Block
 treename:
     AnalysisTree
 selection:

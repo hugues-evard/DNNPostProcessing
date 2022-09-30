@@ -1,3 +1,5 @@
+# This can be used on both the mlp and deepak8
+# contrary to ParticleNet, it only requires features, and coordinates
 treename:
     AnalysisTree
 selection:
