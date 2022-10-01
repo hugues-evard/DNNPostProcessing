@@ -3,7 +3,7 @@
 set -x
 
 MODEL=$1
-DATA_CARD=$2
+DATA=$2
 WORKDIR=`pwd`
 
 # Download miniconda
@@ -28,6 +28,6 @@ export PATH=$PATH:/usr/local/cuda-10.2/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-10.2/lib64
 export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/cuda-10.2/lib64
 
-./train_VBF.sh $MODEL $DATA
+./train_VBF.sh -m ${MODEL} -d ${DATA}
 
 [ -d "runs/" ] && tar -caf output.tar trainings/${MODEL}/ runs/ || tar -caf output.tar trainings/${MODEL}/

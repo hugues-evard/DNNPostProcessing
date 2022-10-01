@@ -3,7 +3,7 @@
 # Example of usage
 #./train_VBF.sh
 #./train_VBF.sh -m deepak8_pf
-#./train_VBF.sh -d VBF_points_features -m particlenet_pf
+#./train_VBF.sh -m particlenet_pf -d VBF_points_features
 #./train_VBF.sh -e "--batch-size 512 --num-epochs 3"
 
 set -x
