@@ -19,7 +19,8 @@ pip install tensorboard
 pip install torch
 pip install pyarrow
 pip install weaver-core
-git clone https://github.com/LEAF-HQ/DNNPostProcessing.git
+# git clone https://github.com/LEAF-HQ/DNNPostProcessing.git
+git clone https://github.com/anmalara/DNNPostProcessing.git
 
 cd DNNPostProcessing
 
