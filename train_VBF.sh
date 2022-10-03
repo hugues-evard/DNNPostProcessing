@@ -23,8 +23,8 @@ lr="1e-3"
 extraopts=""
 
 weaver \
-    --data-train "${DATADIR}/MC__*_M130_*_UL18_1.root" \
-    --data-test "${DATADIR}/MC__*_M130_*_UL18_2.root" \
+    --data-train "${DATADIR}/MC__*_M130_*_UL18_[1-2][0-9].root" \
+    --data-test "${DATADIR}/MC__*_M130_*_UL18_3[0-9].root" \
     --data-config $DATA_CARD --network-config $MODEL \
     --model-prefix training/VBF/{auto}${suffix}/net \
     --num-workers 1 --fetch-step 1 --in-memory --train-val-split 0.8889 \
