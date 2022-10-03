@@ -15,7 +15,7 @@ extra_opts=""
 
 model="mlp_pf"
 data="VBF_features"
-full=""
+samples=""
 
 while getopts m:d:e:f: flag
 do
@@ -23,7 +23,7 @@ do
         m) model=${OPTARG};;
         d) data=${OPTARG};;
         e) extra_opts=${OPTARG};;
-        f) full=${OPTARG};;
+        f) samples=${OPTARG};;
     esac
 done
 
@@ -32,10 +32,14 @@ inputdir="/eos/home-a/anmalara/Public/DNNInputs"
 outputdir="trainings/${model}/{auto}"
 output_name="pred.root"
 
-if [ $full == "full" ]; then
+if [ $samples == "full" ]; then
     data_train="${inputdir}/MC*UL1[6-7-8]*_[1-8][0-9].root"
     data_val="${inputdir}/MC*UL1[6-7-8]*_[0-9].root"
     data_test="${inputdir}/MC*UL1[6-7-8]*_[9][0-9].root"
+elif [ $samples == "half" ]; then
+    data_train="${inputdir}/MC*UL18*_[1-8][0-9].root"
+    data_val="${inputdir}/MC*UL18*_[0-9].root"
+    data_test="${inputdir}/MC*UL18*_[9][0-9].root"
 else
     data_train="${inputdir}/MC*UL18*_[1-2][0-9].root"
     data_val="${inputdir}/MC*UL18*_[0-1].root"

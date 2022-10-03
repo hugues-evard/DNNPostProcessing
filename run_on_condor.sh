@@ -4,6 +4,7 @@ set -x
 
 MODEL=$1
 DATA=$2
+SAMPLES=$3
 WORKDIR=`pwd`
 
 # Download miniconda
@@ -29,7 +30,7 @@ export PATH=$PATH:/usr/local/cuda-10.2/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-10.2/lib64
 export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/cuda-10.2/lib64
 
-./train_VBF.sh -m ${MODEL} -d ${DATA} -f full
+./train_VBF.sh -m ${MODEL} -d ${DATA} -f ${SAMPLES}
 
 subdir=$(cd trainings/${MODEL}/;echo *)
 
