@@ -15,13 +15,15 @@ extra_opts=""
 
 model="mlp_pf"
 data="VBF_features"
+full=""
 
-while getopts m:d:e: flag
+while getopts m:d:e:f: flag
 do
     case "${flag}" in
         m) model=${OPTARG};;
         d) data=${OPTARG};;
         e) extra_opts=${OPTARG};;
+        f) full=${OPTARG};;
     esac
 done
 
@@ -30,9 +32,16 @@ inputdir="/eos/home-a/anmalara/Public/DNNInputs"
 outputdir="trainings/${model}/{auto}"
 output_name="pred.root"
 
-data_train="${inputdir}/MC__*_M130_*_UL18_[8-9].root"
-data_val="${inputdir}/MC__*_M130_*_UL17_[8-9].root"
-data_test="${inputdir}/MC__*_M130_*_UL16postVFP_[8-9].root"
+if [ $full == "full" ]; then
+    data_train="${inputdir}/MC*UL1[6-7-8]*_[1-8][0-9].root"
+    data_val="${inputdir}/MC*UL1[6-7-8]*_[0-9].root"
+    data_test="${inputdir}/MC*UL1[6-7-8]*_[9][0-9].root"
+else
+    data_train="${inputdir}/MC*UL18*_[1-2][0-9].root"
+    data_val="${inputdir}/MC*UL18*_[0-1].root"
+    data_test="${inputdir}/MC*UL18*_[9][0-1].root"
+fi
+
 
 model_config="models/${model}.py"
 data_config="data/${data}.yaml"

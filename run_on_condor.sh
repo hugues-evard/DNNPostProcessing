@@ -29,7 +29,7 @@ export PATH=$PATH:/usr/local/cuda-10.2/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-10.2/lib64
 export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/cuda-10.2/lib64
 
-./train_VBF.sh -m ${MODEL} -d ${DATA}
+./train_VBF.sh -m ${MODEL} -d ${DATA} -f full
 
 subdir=$(cd trainings/${MODEL}/;echo *)
 
