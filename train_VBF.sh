@@ -61,7 +61,7 @@ weaver \
     --data-train ${data_train} --data-val ${data_val} --data-test ${data_test} \
     --data-config ${data_config} --network-config ${model_config} \
     --model-prefix "${outputdir}/net" --log "${outputdir}/log.log" \
-    --num-workers 2 --fetch-step 1 ${train_opts} ${batch_opts} --gpus "" \
+    --num-workers 2 --fetch-by-files --fetch-step 10 ${train_opts} ${batch_opts} --gpus "" \
     --optimizer ranger --predict-output ${output_name} \
     ${extra_opts}
 
