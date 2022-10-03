@@ -40,6 +40,10 @@ elif [ $samples == "half" ]; then
     data_train="${inputdir}/MC*UL18*_[1-8][0-9].root"
     data_val="${inputdir}/MC*UL18*_[0-9].root"
     data_test="${inputdir}/MC*UL18*_[9][0-9].root"
+elif [ $samples == "short" ]; then
+    data_train="${inputdir}/MC*UL18*_[1-6][0-9].root"
+    data_val="${inputdir}/MC*UL18*_[0-6].root"
+    data_test="${inputdir}/MC*UL18*_[9][0-6].root"
 else
     data_train="${inputdir}/MC*UL18*_[1-2][0-9].root"
     data_val="${inputdir}/MC*UL18*_[0-1].root"
