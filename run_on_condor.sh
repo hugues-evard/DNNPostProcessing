@@ -31,4 +31,4 @@ export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/cuda-10.2/lib64
 
 ./train_VBF.sh -m ${MODEL} -d ${DATA}
 
-[ -d "runs/" ] && tar -caf output.tar trainings/${MODEL}/ runs/ || tar -caf output.tar trainings/${MODEL}/
+[ -d "runs/" ] && tar -caf output.tar train_VBF.sh trainings/${MODEL}/ runs/ || tar -caf output.tar train_VBF.sh trainings/${MODEL}/

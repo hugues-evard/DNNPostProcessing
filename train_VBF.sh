@@ -37,7 +37,7 @@ data_test="${inputdir}/MC__*_M130_*_UL16postVFP_[8-9].root"
 model_config="models/${model}.py"
 data_config="data/${data}.yaml"
 
-train_opts="--num-epochs 2"
+train_opts="--num-epochs 20"
 batch_opts="--batch-size 128 --start-lr 1e-3"
 
 weaver \
@@ -47,8 +47,6 @@ weaver \
     --num-workers 2 --fetch-step 1 ${train_opts} ${batch_opts} --gpus "" \
     --optimizer ranger --predict-output ${output_name} \
     ${extra_opts}
-
-echo cp ${PWD}/$0 ${outputdir}/$0
 
 #--samples-per-epoch 160000
 #--samples-per-epoch-val 20000
