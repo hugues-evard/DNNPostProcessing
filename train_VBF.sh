@@ -33,21 +33,21 @@ outputdir="trainings/${model}/{auto}"
 output_name="pred.root"
 
 if [ $samples == "full" ]; then
-    data_train="${inputdir}/MC*UL1[6-7-8]*_[1-8][0-9].root"
+    data_train="${inputdir}/MC*UL1[6-7-8]*_[2-9][0-9].root"
     data_val="${inputdir}/MC*UL1[6-7-8]*_[0-9].root"
-    data_test="${inputdir}/MC*UL1[6-7-8]*_[9][0-9].root"
+    data_test="${inputdir}/MC*UL1[6-7-8]*_[1][0-9].root"
 elif [ $samples == "half" ]; then
-    data_train="${inputdir}/MC*UL18*_[1-8][0-9].root"
-    data_val="${inputdir}/MC*UL18*_[0-9].root"
-    data_test="${inputdir}/MC*UL18*_[9][0-9].root"
+    data_train="${inputdir}/MC*UL18*_[1-3][0-9].root"
+    data_val="${inputdir}/MC*UL17*_[0-5].root"
+    data_test="${inputdir}/MC*UL16*_[1][0-5].root"
 elif [ $samples == "short" ]; then
-    data_train="${inputdir}/MC*UL18*_[1-6][0-9].root"
-    data_val="${inputdir}/MC*UL18*_[0-6].root"
-    data_test="${inputdir}/MC*UL18*_[9][0-6].root"
+    data_train="${inputdir}/MC*UL18*_[0-9].root"
+    data_val="${inputdir}/MC*UL17*_[0-1].root"
+    data_test="${inputdir}/MC*UL16*_[1][0-1].root"
 else
-    data_train="${inputdir}/MC*UL18*_[1-2][0-9].root"
-    data_val="${inputdir}/MC*UL18*_[0-1].root"
-    data_test="${inputdir}/MC*UL18*_[9][0-1].root"
+    data_train="${inputdir}/MC*125*UL18*_[0-9].root"
+    data_val="${inputdir}/MC*125*UL17*_[0-1].root"
+    data_test="${inputdir}/MC*125*UL16*_[0-1].root"
 fi
 
 
