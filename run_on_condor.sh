@@ -5,7 +5,11 @@ set -x
 MODEL=$1
 DATA=$2
 SAMPLES=$3
-WORKDIR=`pwd`
+TRAIN=$4
+VAL=$5
+TEST=$6
+GPUS=$7
+WORKDIR=$(pwd)
 
 # Download miniconda
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda_install.sh
@@ -30,7 +34,7 @@ export PATH=$PATH:/usr/local/cuda-10.2/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-10.2/lib64
 export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/cuda-10.2/lib64
 
-./train_VBF.sh -m ${MODEL} -d ${DATA} -f ${SAMPLES}
+./train_VBF.sh -m ${MODEL} -d ${DATA} -f ${SAMPLES} -t ${TRAIN} -v ${VAL} -x ${TEST} -g ${GPUS}
 
 subdir=$(cd trainings/${MODEL}/;echo *)
 
