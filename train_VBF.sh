@@ -17,10 +17,12 @@ model="mlp_pf"
 data="VBF_features"
 samples=""
 gpus=""
+epochs="10"
 
-while getopts g:m:d:e:f:t:v:x: flag
+while getopts e:g:m:d:e:f:t:v:x: flag
 do
     case "${flag}" in
+        e) epochs=${OPTARG};;
         g) gpus=${OPTARG};;
         m) model=${OPTARG};;
         d) data=${OPTARG};;
@@ -54,7 +56,7 @@ fi
 model_config="models/${model}.py"
 data_config="data/${data}.yaml"
 
-train_opts="--num-epochs 20"
+train_opts="--num-epochs "${epochs}
 batch_opts="--batch-size 128 --start-lr 1e-3"
 
 weaver \

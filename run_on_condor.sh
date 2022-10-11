@@ -9,6 +9,7 @@ TRAIN="$4"
 VAL="$5"
 TEST="$6"
 GPUS=$7
+EPOCHS=$8
 WORKDIR=$(pwd)
 
 # Download miniconda
@@ -34,7 +35,7 @@ export PATH=$PATH:/usr/local/cuda-10.2/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-10.2/lib64
 export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/cuda-10.2/lib64
 
-./train_VBF.sh -m ${MODEL} -d ${DATA} -f ${SAMPLES} -t "${TRAIN}" -v "${VAL}" -x "${TEST}" -g ${GPUS}
+./train_VBF.sh -m ${MODEL} -d ${DATA} -f ${SAMPLES} -t "${TRAIN}" -v "${VAL}" -x "${TEST}" -g ${GPUS} -e ${EPOCHS}
 
 subdir=$(cd trainings/${MODEL}/;echo *)
 
