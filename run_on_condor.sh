@@ -5,9 +5,9 @@ set -x
 MODEL=$1
 DATA=$2
 SAMPLES=$3
-TRAIN=$4
-VAL=$5
-TEST=$6
+TRAIN="$4"
+VAL="$5"
+TEST="$6"
 GPUS=$7
 WORKDIR=$(pwd)
 
