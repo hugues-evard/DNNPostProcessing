@@ -37,8 +37,4 @@ export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/cuda-10.2/lib64
 
 ./train_VBF.sh -m ${MODEL} -d ${DATA} -f ${SAMPLES} -t "${TRAIN}" -v "${VAL}" -x "${TEST}" -g ${GPUS} -e ${EPOCHS}
 
-subdir=$(cd trainings/${MODEL}/;echo *)
-
-cp train_VBF.sh trainings/${MODEL}/${subdir}
-
 [ -d "runs/" ] && tar -caf output.tar trainings/${MODEL}/ runs/ || tar -caf output.tar trainings/${MODEL}/

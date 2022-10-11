@@ -52,6 +52,16 @@ elif [[ $samples == "short" ]]; then
     data_test="${inputdir}/MC*UL16*_[1][0-1].root"
 fi
 
+if [[ ${gpus} == "1" ]]; then
+    gpus="0"
+elif [[ ${gpus} == "2" ]]; then
+    gpus="0,1"
+elif [[ ${gpus} == "3" ]]; then
+    gpus="0,1,2"
+elif [[ ${gpus} == "4" ]]; then
+    gpus="0,1,2"
+fi
+
 
 model_config="models/${model}.py"
 data_config="data/${data}.yaml"
@@ -63,7 +73,9 @@ weaver \
     --data-train "${data_train}" --data-val "${data_val}" --data-test "${data_test}" \
     --data-config ${data_config} --network-config ${model_config} \
     --model-prefix "${outputdir}/net" --log "${outputdir}/log.log" \
-    --num-workers 2 --fetch-by-files --fetch-step 10 ${train_opts} ${batch_opts} --gpus "" \
+    ${train_opts} ${batch_opts} --gpus ${gpus} \
+    # --num-workers 1 --fetch-by-files --fetch-step 10\
+    --num-workers 3 --fetch-step 0.01 \
     --optimizer ranger --predict-output ${output_name} \
     ${extra_opts}
 
