@@ -16,6 +16,11 @@ WORKDIR=$(pwd)
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda_install.sh
 bash miniconda_install.sh -b -p ${WORKDIR}/miniconda
 export PATH=$WORKDIR/miniconda/bin:$PATH
+conda create -n weaver python=3.7
+conda activate weaver
+# # to be used in case one would want to
+# conda create python=3.7 -p $WORKDIR/miniconda/envs/weaver
+# conda activate $WORKDIR/miniconda/envs/weaver
 # install weaver and clone particle_transformer
 pip install numpy pandas scikit-learn scipy matplotlib tqdm PyYAML
 pip install uproot3 awkward0 lz4 xxhash
@@ -30,11 +35,14 @@ git clone https://github.com/anmalara/DNNPostProcessing.git
 
 cd DNNPostProcessing
 
+ls /afs/cern.ch/work/a/anmalara/WorkingArea/DNN/DNNPostProcessing/train_VBF.sh
+
 # CUDA environment setup
 export PATH=$PATH:/usr/local/cuda-10.2/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-10.2/lib64
 export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/cuda-10.2/lib64
 
+echo ./train_VBF.sh -m ${MODEL} -d ${DATA} -f ${SAMPLES} -t "${TRAIN}" -v "${VAL}" -x "${TEST}" -g ${GPUS} -e ${EPOCHS}
 ./train_VBF.sh -m ${MODEL} -d ${DATA} -f ${SAMPLES} -t "${TRAIN}" -v "${VAL}" -x "${TEST}" -g ${GPUS} -e ${EPOCHS}
 
 [ -d "runs/" ] && tar -caf output.tar trainings/${MODEL}/ runs/ || tar -caf output.tar trainings/${MODEL}/

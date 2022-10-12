@@ -1,7 +1,15 @@
 Universe                = vanilla
 executable              = run_on_condor.sh
-arguments               = <model> <data_card>
-outpath                 = /afs/cern.ch/work/a/anmalara/WorkingArea/CondorOutput
+model                   = mlp_pf
+#model                   = deepak8_pf
+#model                   = particlenet_pf
+data                    = VBF_features
+#data                    = VBF_points_features
+# samples                 = full
+#samples                 = half
+samples                 = short
+arguments               = $(model) $(data) $(samples)
+outpath                 = /afs/cern.ch/work/a/anmalara/WorkingArea/DNN/DNNPostProcessing/trainings/CondorOutputs/$(model)
 output                  = $(outpath)/job.$(ClusterId).$(ProcId).out
 error                   = $(outpath)/job.$(ClusterId).$(ProcId).err
 log                     = $(outpath)/job.$(ClusterId).log
@@ -13,8 +21,9 @@ notification            = Always
 should_transfer_files   = YES
 when_to_transfer_output = ON_EXIT_OR_EVICT
 transfer_output_files   = DNNPostProcessing/output.tar
-transfer_output_remaps  = "output.tar = output.$(ClusterId).$(ProcId).tar"
+transfer_output_remaps  = "output.tar = $(outpath)/output.$(ClusterId).$(ProcId).tar"
 request_GPUs = 1
 request_CPUs = 4
-+MaxRuntime = 604800
+# +JobFlavour = "espresso"
++JobFlavour = "tomorrow"
 queue

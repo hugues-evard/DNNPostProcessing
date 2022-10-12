@@ -43,9 +43,9 @@ if [[ $samples == "full" ]]; then
     data_val="${inputdir}/MC*UL1[6-7-8]*_[0-9].root"
     data_test="${inputdir}/MC*UL1[6-7-8]*_[1][0-9].root"
 elif [[ $samples == "half" ]]; then
-    data_train="${inputdir}/MC*UL18*_[1-3][0-9].root"
-    data_val="${inputdir}/MC*UL17*_[0-5].root"
-    data_test="${inputdir}/MC*UL16*_[1][0-5].root"
+    data_train="${inputdir}/eventCategory_0/MC*M1[2][4-6]*UL1[6-7-8]*.root"
+    data_val="${inputdir}/eventCategory_0/MC*M1[2][0]*UL1[6-7-8]*.root"
+    data_test="${inputdir}/eventCategory_0/MC*M1[3][0]*UL1[6-7-8]*.root"
 elif [[ $samples == "short" ]]; then
     data_train="${inputdir}/MC*UL18*_[0-9].root"
     data_val="${inputdir}/MC*UL17*_[0-1].root"
@@ -67,19 +67,18 @@ model_config="models/${model}.py"
 data_config="data/${data}.yaml"
 
 train_opts="--num-epochs "${epochs}
-batch_opts="--batch-size 128 --start-lr 1e-3"
+batch_opts="--batch-size 512 --start-lr 1e-3"
 
 weaver \
     --data-train "${data_train}" --data-val "${data_val}" --data-test "${data_test}" \
     --data-config ${data_config} --network-config ${model_config} \
     --model-prefix "${outputdir}/net" --log "${outputdir}/log.log" \
     ${train_opts} ${batch_opts} --gpus ${gpus} \
-    # --num-workers 1 --fetch-by-files --fetch-step 10\
-    --num-workers 3 --fetch-step 0.01 \
+    --num-workers 4 --fetch-step 0.01 \
     --optimizer ranger --predict-output ${output_name} \
     ${extra_opts}
 
-#--samples-per-epoch 160000
-#--samples-per-epoch-val 20000
+#--samples-per-epoch 100000 --samples-per-epoch-val 20000
 #--tensorboard VBF_${suffix} \
 #--in-memory --train-val-split 0.8889
+# --num-workers 1 --fetch-by-files --fetch-step 10\
