@@ -13,7 +13,7 @@ val=$6
 test=$7
 n_gpus=$8
 n_epochs=$9
-extra_name=$10
+extra_name=${10}
 
 WORKDIR=$(pwd)
 

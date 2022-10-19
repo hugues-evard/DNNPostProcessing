@@ -48,7 +48,7 @@ if [[ ${extra_name} != "" ]]; then
 fi
 
 
-outputdir="trainings/${model}${extra_name}/{auto}"
+outputdir="trainings/${model}/{auto}${extra_name}"
 output_name="pred.root"
 model_config="models/${model}.py"
 data_config="data/${data}.yaml"
