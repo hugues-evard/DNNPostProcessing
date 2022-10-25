@@ -18,6 +18,9 @@ def main():
         os.system('mkdir -p '+outdir+folder)
         with open('ListFilesToCopy_'+folder+'.txt', 'r') as fp:
             commands += [' '.join(['xrdcp', '-f', director+x.replace('\n',''),outdir+folder+'/']) for x in fp.readlines()]
+    print('Read '+str(len(commands)))
+    commands = list(filter(lambda x: not os.path.exists(x.split()[-1]+x.split()[-2].split('/')[-1]) , commands))
+    print('Filtered '+str(len(commands)))
     parallelize(commands, ncores=10, remove_temp_files=True)
 
 if __name__ == '__main__':

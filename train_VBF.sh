@@ -80,7 +80,8 @@ weaver \
     --model-prefix "${outputdir}/net" --log "${outputdir}/log.log" \
     ${train_opts} ${batch_opts} --gpus "${n_gpus}" \
     --num-workers 4 --fetch-step 0.01 \
-    --optimizer ranger --predict-output ${output_name}
+    --optimizer ranger --predict-output ${output_name}\
+    --tensorboard ${model}${extra_name}
 
 
 #--samples-per-epoch 100000 --samples-per-epoch-val 20000

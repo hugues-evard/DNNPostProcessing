@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 import os
 from collections import OrderedDict
 from ClusterSubmission.CondorBase import SubmitListToCondor
@@ -6,7 +7,6 @@ def GetArgs(args):
     empty = list(filter(lambda x: args[x]=='', args.keys()))
     if len(empty):
         raise ValueError('Some arguments are empty:'+ str(empty))
-    print(' '.join(args.values()))
     return ' '.join(args.values())
 
 
@@ -29,11 +29,13 @@ def main():
         #'request_disk', 'request_memory'
         ]
 
-    model_config_info =[
-        ('mlp_pf','VBF_features'),
-        ('deepak8_pf','VBF_features'),
-        ('particlenet_pf','VBF_points_features'),
-    ]
+    model_config_info = []
+    modes = ['', '_charged', '_neutral', '_UE', '_VBF']
+    # modes = ['']
+    for mode in modes:
+        model_config_info.append(('mlp_pf',         'VBF_features'+mode))
+        model_config_info.append(('deepak8_pf',     'VBF_features'+mode))
+        model_config_info.append(('particlenet_pf', 'VBF_points_features'+mode))
 
     job_args   = []
     inputdir ='/eos/home-a/anmalara/Public/DNNInputs/'
@@ -47,13 +49,13 @@ def main():
         ('train',      'none'),
         ('val',        'none'),
         ('test',       'none'),
-        ('train',      inputdir+'/eventCategory_[0]/MC*M1[2][4-6]*UL1[6-7-8]*.root'),
-        ('val',        inputdir+'/eventCategory_[0]/MC*M1[2][0]*UL1[6-7-8]*.root'),
-        ('test',       inputdir+'/eventCategory_[0]/MC*M1[3][0]*UL1[6-7-8]*.root'),
+        ('train',      inputdir+'/eventCategory_[0-2]/MC*M1[2][4-6]*UL1[6-7-8]*.root'),
+        ('val',        inputdir+'/eventCategory_[0-2]/MC*M1[2][0]*UL1[6-7-8]*.root'),
+        ('test',       inputdir+'/eventCategory_[0-2]/MC*M1[3][0]*UL1[6-7-8]*.root'),
         ('n_gpus',     '0' if not 'request_GPUs' in extraInfo else extraInfo['request_GPUs']),
         ('n_epochs',   '10'),
         ('extra_name', ''),
-        ('extra_name', 'epoch_10_cat0'),
+        ('extra_name', 'epoch_10_cat012'),
     ])
 
     if args['flag_test']!= 'test' and any([ args[x]== 'none' for x in ['train','val','test']]):
@@ -65,9 +67,12 @@ def main():
         job_args.append(GetArgs(args))
 
     outdir    = os.getenv('HOME')+'/workspace/CondorOutputs/'
-    time = 'espresso'
-    time = 'longlunch'
-    # time = 'tomorrow'
+    time = 'espresso'     # 20min
+    time = 'microcentury' # 1h
+    # time = 'longlunch'    # 2h
+    # time = 'workday'      # 8h
+    # time = 'tomorrow'     # 24h
+
     debug=False
     # debug=True
     SubmitListToCondor(job_args, executable='run_on_condor.sh', outdir=outdir, Time=time, extraInfo=extraInfo, deleteInfo=deleteInfo, debug=debug)

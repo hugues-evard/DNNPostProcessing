@@ -11,6 +11,8 @@ new_variables:
     ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
     is_signal : m_is_VBF
     is_bkg: np.logical_not(m_is_VBF)
+    PF_UE_VBF_energy_log: np.log(PF_UE_VBF_energy)
+    PF_UE_VBF_pt_log: np.log(PF_UE_VBF_pt)
 
 preprocess:
   ### method: [manual, auto] - whether to use manually specified parameters for variable standardization
@@ -20,7 +22,7 @@ preprocess:
 
 inputs:
     pf_features:
-        length: 100
+        length: 300
         vars:
         ### [format 1]: var_name (no transformation)
         ### [format 2]: [var_name,
@@ -29,13 +31,15 @@ inputs:
         ###              clip_min(optional, default=-5),
         ###              clip_max(optional, default=5),
         ###              pad_value(optional, default=0)]
-            - PF_UE_charged_pt
-            - PF_UE_charged_eta
-            - PF_UE_charged_phi
-            - PF_UE_charged_energy
-            - PF_UE_charged_pdgid
-            - PF_UE_charged_charge
-            - PF_UE_charged_puppiweight
+            - PF_UE_VBF_pt
+            - PF_UE_VBF_eta
+            - PF_UE_VBF_phi
+            - PF_UE_VBF_energy
+            - PF_UE_VBF_pdgid
+            - PF_UE_VBF_charge
+            - PF_UE_VBF_puppiweight
+            - PF_UE_VBF_energy_log
+            - PF_UE_VBF_pt_log
 
 labels:
     ### type can be `simple`, `custom`
@@ -53,8 +57,11 @@ observers:
     - m_eventCategory
     - m_n_PF_jet1
     - m_n_PF_jet2
+    - m_n_PF_UE_charged
+    - m_n_PF_UE_neutral
     - m_n_nonVBF_jets
     - m_HT_nonVBF_jets
+    - m_mjj
     - m_Zeppenfeld
     - m_Zeppenfeld_charged
     - m_Zeppenfeld_neutral
