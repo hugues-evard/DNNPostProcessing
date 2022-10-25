@@ -48,7 +48,7 @@ if [[ ${extra_name} != "" ]]; then
 fi
 
 
-outputdir="trainings/${model}/{auto}${extra_name}"
+outputdir="trainings/${model}/{auto}_${data}${extra_name}"
 output_name="pred.root"
 model_config="models/${model}.py"
 data_config="data/${data}.yaml"
@@ -81,7 +81,7 @@ weaver \
     ${train_opts} ${batch_opts} --gpus "${n_gpus}" \
     --num-workers 4 --fetch-step 0.01 \
     --optimizer ranger --predict-output ${output_name}\
-    --tensorboard ${model}${extra_name}
+    --tensorboard "${model}_${data}${extra_name}"
 
 
 #--samples-per-epoch 100000 --samples-per-epoch-val 20000
