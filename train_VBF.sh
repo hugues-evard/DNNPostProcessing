@@ -1,40 +1,90 @@
 #!/bin/bash
 
-MODEL=$1
-DATA_CARD=$2
+# Example of usage
+#./train_VBF.sh
+#./train_VBF.sh -m mlp_pf -d VBF_features
+#./train_VBF.sh -m deepak8_pf -d VBF_features
+#./train_VBF.sh -m particlenet_pf -d VBF_points_features
+#./train_VBF.sh -e "--batch-size 512 --num-n_epochs 3"
 
 set -x
 
-#export DATADIR_VBF='/eos/user/h/hevard/datasets/test'
-export DATADIR_VBF='/eos/user/a/anmalara/Public/DNNInputs/'
-
 echo "args: $@"
 
-# set the dataset dir via `DATADIR_QuarkGluon`
-DATADIR=${DATADIR_VBF}
-[[ -z $DATADIR ]] && DATADIR='./datasets/QuarkGluon'
+# Defining nominal variables
+model="mlp_pf"
+data="VBF_features"
+flag_test=""
+n_gpus=""
+n_epochs="1"
+extra_name=""
+inputdir="/eos/home-a/anmalara/Public/DNNInputs"
+data_train_ref="${inputdir}/eventCategory_0/MC*M1[2][4-6]*UL1[6-7-8]*.root"
+data_val_ref="${inputdir}/eventCategory_0/MC*M1[2][0]*UL1[6-7-8]*.root"
+data_test_ref="${inputdir}/eventCategory_0/MC*M1[3][0]*UL1[6-7-8]*.root"
 
-# set a comment via `COMMENT`
-suffix=${COMMENT}
+data_train="${data_train_ref}"
+data_val="${data_val_ref}"
+data_test="${data_test_ref}"
 
-# PN, PFN, PCNN, ParT
-#modelopts="networks/particlenet_pf.py"
-lr="1e-3"
-extraopts=""
+
+while getopts m:d:f:t:v:x:g:e:n: flag
+do
+    case "${flag}" in
+        m) model=${OPTARG};;
+        d) data=${OPTARG};;
+        f) flag_test=${OPTARG};;
+        t) data_train=${OPTARG};;
+        v) data_val=${OPTARG};;
+        x) data_test=${OPTARG};;
+        g) n_gpus=${OPTARG};;
+        e) n_epochs=${OPTARG};;
+        n) extra_name=${OPTARG};;
+    esac
+done
+
+if [[ ${extra_name} != "" ]]; then
+    extra_name="_"${extra_name}
+fi
+
+
+outputdir="trainings/${model}/{auto}_${data}${extra_name}"
+output_name="pred.root"
+model_config="models/${model}.py"
+data_config="data/${data}.yaml"
+
+train_opts="--num-epochs "${n_epochs}
+batch_opts="--batch-size 512 --start-lr 1e-3"
+
+if [[ $flag_test == "test" ]]; then
+    data_train="${data_train_ref}"
+    data_val="${data_val_ref}"
+    data_test="${data_test_ref}"
+fi
+
+if [[ ${n_gpus} == "0" ]]; then
+    n_gpus=""
+elif [[ ${n_gpus} == "1" ]]; then
+    n_gpus="0"
+elif [[ ${n_gpus} == "2" ]]; then
+    n_gpus="0,1"
+elif [[ ${n_gpus} == "3" ]]; then
+    n_gpus="0,1,2"
+elif [[ ${n_gpus} == "4" ]]; then
+    n_gpus="0,1,2"
+fi
 
 weaver \
-    --data-train "${DATADIR}/MC__*_M130_*_UL18_[1-2][0-9].root" \
-    --data-test "${DATADIR}/MC__*_M130_*_UL18_3[0-9].root" \
-    --data-config $DATA_CARD --network-config $MODEL \
-    --model-prefix training/VBF/{auto}${suffix}/net \
-    --num-workers 1 --fetch-step 1 --in-memory --train-val-split 0.8889 \
-    --batch-size 512 --samples-per-epoch 160000 --samples-per-epoch-val 20000 --num-epochs 20 \
-    --start-lr $lr --optimizer ranger --log logs/VBF_{auto}${suffix}.log --predict-output pred.root \
-    --tensorboard VBF_${suffix} \
-    ${extraopts} "${@:3}"
-#    --batch-size 512 --samples-per-epoch 16000 --samples-per-epoch-val 2000 --num-epochs 2 --gpus 0 \
-#    --data-train "${DATADIR}/MC__*_M130_*_UL18_1.root" \
-#    --data-test "${DATADIR}/MC__*_M130_*_UL18_2.root" \
-#    --data-train "${DATADIR}/MC__*_M130_*_UL18_[1-2][0-9].root" \
-#    --data-test "${DATADIR}/MC__*_M130_*_UL18_3[0-9].root" \
-#    --data-config data/VBF_points_features.yaml --network-config $modelopts \
+    --data-train "${data_train}" --data-val "${data_val}" --data-test "${data_test}" \
+    --data-config ${data_config} --network-config ${model_config} \
+    --model-prefix "${outputdir}/net" --log "${outputdir}/log.log" \
+    ${train_opts} ${batch_opts} --gpus "${n_gpus}" \
+    --num-workers 4 --fetch-step 0.01 \
+    --optimizer ranger --predict-output ${output_name}\
+    --tensorboard "${model}_${data}${extra_name}"
+
+
+#--samples-per-epoch 100000 --samples-per-epoch-val 20000
+#--tensorboard VBF_${suffix} \
+#--in-memory --train-val-split 0.8889
+# --num-workers 1 --fetch-by-files --fetch-step 10\

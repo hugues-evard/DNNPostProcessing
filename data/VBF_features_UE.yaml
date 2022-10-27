@@ -11,8 +11,8 @@ new_variables:
     ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
     is_signal : m_is_VBF
     is_bkg: np.logical_not(m_is_VBF)
-    PF_UE_VBF_energy_log: np.log(PF_UE_VBF_energy)
-    PF_UE_VBF_pt_log: np.log(PF_UE_VBF_pt)
+    PF_UE_energy_log: np.log(PF_UE_energy)
+    PF_UE_pt_log: np.log(PF_UE_pt)
 
 preprocess:
   ### method: [manual, auto] - whether to use manually specified parameters for variable standardization
@@ -31,15 +31,15 @@ inputs:
         ###              clip_min(optional, default=-5),
         ###              clip_max(optional, default=5),
         ###              pad_value(optional, default=0)]
-            - PF_UE_VBF_pt
-            - PF_UE_VBF_eta
-            - PF_UE_VBF_phi
-            - PF_UE_VBF_energy
-            - PF_UE_VBF_pdgid
-            - PF_UE_VBF_charge
-            - PF_UE_VBF_puppiweight
-            - PF_UE_VBF_energy_log
-            - PF_UE_VBF_pt_log
+            - PF_UE_pt
+            - PF_UE_eta
+            - PF_UE_phi
+            - PF_UE_energy
+            - PF_UE_pdgid
+            - PF_UE_charge
+            - PF_UE_puppiweight
+            - PF_UE_energy_log
+            - PF_UE_pt_log
 
 labels:
     ### type can be `simple`, `custom`
