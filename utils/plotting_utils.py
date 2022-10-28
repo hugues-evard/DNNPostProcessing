@@ -23,10 +23,10 @@ def PlotGraphs(graphs={}, pdfname='ROCs', x_title='Signal efficiency', y_title='
     if logy:
         # canv = tdrCanvas('ROCs', -0.1, 1.1, 1e-04, 1.2, x_title, y_title, kSquare)
         # leg = tdrLeg(0.40, 0.2, 0.89, 0.35, 0.03, 42, rt.kBlack)
-        leg = tdrLeg(0.40, 0.15, 0.89, 0.15+0.03*(len(graphs)+1), 0.03, 42, rt.kBlack)
+        leg = tdrLeg(0.30, 0.15, 0.89, 0.15+0.03*(len(graphs)+1), 0.03, 42, rt.kBlack)
     else:
         # canv = tdrCanvas('ROCs', -0.1, 1.1, 0, 1.5, x_title, y_title, kSquare)
-        leg = tdrLeg(0.45, 0.65, 0.95, 0.9, 0.035, 42, rt.kBlack)
+        leg = tdrLeg(0.30, 0.65, 0.95, 0.9, 0.035, 42, rt.kBlack)
     canv.SetLogy(logy)
     for graph, info in graphs.items():
         color = info['color'] if 'color' in info else rt.kRed

@@ -1,7 +1,7 @@
 *.pyc
 logs/
 runs/
-training/
+trainings/
 job.*.log
 job.*.err
 job.*.out

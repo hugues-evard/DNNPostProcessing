@@ -14,7 +14,7 @@ class MultiLayerPerceptron(nn.Module):
     """
 
     def __init__(self, input_dims, num_classes,
-                 layer_params=(256, 64, 64),
+                 layer_params=(1024, 256, 256),
                  **kwargs):
                 
         super(MultiLayerPerceptron, self).__init__(**kwargs)
@@ -32,7 +32,7 @@ class MultiLayerPerceptron(nn.Module):
 
 
 def get_model(data_config, **kwargs):
-    layer_params = (256, 64, 64)
+    layer_params = (1024, 256, 256)
     _, pf_length, pf_features_dims = data_config.input_shapes['pf_features']
     input_dims = pf_length * pf_features_dims
     num_classes = len(data_config.label_value)

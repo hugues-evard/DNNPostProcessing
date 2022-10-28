@@ -10,11 +10,11 @@ selection:
 new_variables:
     ### [format] name: formula
     ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
-    pf_mask: ak.ones_like(PF_UE_VBF_pt)
+    pf_mask: ak.ones_like(PF_UE_neutral_pt)
     is_signal : m_is_VBF
     is_bkg: np.logical_not(m_is_VBF)
-    PF_UE_VBF_energy_log: np.log(PF_UE_VBF_energy)
-    PF_UE_VBF_pt_log: np.log(PF_UE_VBF_pt)
+    PF_UE_neutral_energy_log: np.log(PF_UE_neutral_energy)
+    PF_UE_neutral_pt_log: np.log(PF_UE_neutral_pt)
 
 preprocess:
   ### method: [manual, auto] - whether to use manually specified parameters for variable standardization
@@ -26,8 +26,8 @@ inputs:
     pf_points:
         length: 100
         vars:
-            - PF_UE_VBF_eta
-            - PF_UE_VBF_phi
+            - PF_UE_neutral_eta
+            - PF_UE_neutral_phi
     pf_features:
         length: 100
         vars:
@@ -38,15 +38,15 @@ inputs:
         ###              clip_min(optional, default=-5),
         ###              clip_max(optional, default=5),
         ###              pad_value(optional, default=0)]
-            - PF_UE_VBF_pt
-            - PF_UE_VBF_eta
-            - PF_UE_VBF_phi
-            - PF_UE_VBF_energy
-            - PF_UE_VBF_pdgid
-            - PF_UE_VBF_charge
-            - PF_UE_VBF_puppiweight
-            - PF_UE_VBF_energy_log
-            - PF_UE_VBF_pt_log
+            - PF_UE_neutral_pt
+            - PF_UE_neutral_eta
+            - PF_UE_neutral_phi
+            - PF_UE_neutral_energy
+            - PF_UE_neutral_pdgid
+            - PF_UE_neutral_charge
+            - PF_UE_neutral_puppiweight
+            - PF_UE_neutral_energy_log
+            - PF_UE_neutral_pt_log
 
     pf_mask:
         length: 100
